@@ -100,13 +100,13 @@ class RegistrationForm extends React.Component {
                     <Form.Radio
                       label="Student"
                       value='student'
-                      checked={value === 'student'}
+                      checked={this.state.is_student = value === 'student'}
                       onChange={this.handleChange}
                     />
                     <Form.Radio
                       label="Teacher"
                       value='teacher'
-                      checked={value === 'teacher'}
+                      checked={this.state.is_teacher = value === 'teacher'}
                       onChange={this.handleChange}
                     />
                   </Form.Group>
