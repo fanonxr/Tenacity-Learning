@@ -16,21 +16,26 @@ class RegistrationForm extends React.Component {
     username: "",
     email: "",
     password1: "",
-    password2: ""
+    password2: "",
+    selectedStudent: "option1",
+    selectedTeacher: "option2",
+    is_student: false,
+    is_teacher: false
   };
 
   handleSubmit = e => {
     e.preventDefault();
-    const { username, email, password1, password2 } = this.state;
-    this.props.signup(username, email, password1, password2);
+    const { username, email, password1, password2, is_student, is_teacher } = this.state;
+    this.props.signup(username, email, password1, password2, is_student, is_teacher);
   };
 
-  handleChange = e => {
+  handleChange = (e, { value } ) => {
     this.setState({ [e.target.name]: e.target.value });
+    this.setState({ value });
   };
 
   render() {
-    const { username, email, password1, password2 } = this.state;
+    const { username, email, password1, password2, value } = this.state;
     const { error, loading, token } = this.props;
     if (token) {
       return <Redirect to="/" />;
@@ -89,6 +94,24 @@ class RegistrationForm extends React.Component {
                   type="password"
                 />
 
+                <Form.Group>
+                  <Form.Group inline>
+                    <label>User Type: </label>
+                    <Form.Radio
+                      label="Student"
+                      value='student'
+                      checked={value === 'student'}
+                      onChange={this.handleChange}
+                    />
+                    <Form.Radio
+                      label="Teacher"
+                      value='teacher'
+                      checked={value === 'teacher'}
+                      onChange={this.handleChange}
+                    />
+                  </Form.Group>
+                </Form.Group>
+
                 <Button
                   color="teal"
                   fluid
@@ -120,8 +143,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    signup: (username, email, password1, password2) =>
-      dispatch(authSignup(username, email, password1, password2))
+    signup: (username, email, password1, password2, is_student, is_teacher) =>
+      dispatch(authSignup(username, email, password1, password2, is_student, is_teacher))
   };
 };
 
